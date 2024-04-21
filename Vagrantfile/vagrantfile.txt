@@ -20,11 +20,5 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   end
 
-  # Provisioning with a shell script (optional)
-  # You can add your shell script here to install packages or set configurations.
-  # For example:
-  config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y apache2
-  SHELL
+
 end
