@@ -1,0 +1,31 @@
+---
+
+- name: Deploy LAMP stack and configure Slave node
+  hosts: slave # Target only the "slave" node
+  become: yes # Gain root privileges for tasks
+  tasks:
+
+    # Copy deploy_lamp.sh script to the slave node
+
+  - name: Copy LAMP deployment script to slave node
+    copy:
+      src: /home/vagrant/deploy_lamp.sh
+      dest: /home/vagrant/deploy_lamp.sh
+      mode: 0755
+
+    # Make the script executable
+
+    # Execute the deploy_lamp.sh script on the slave node
+  - name: Run LAMP deployment script on slave node
+    shell: /home/vagrant/deploy_lamp.sh
+
+  - name: Create cron job for uptime check
+    cron:
+      name: Uptime check every 12am
+      minute: "0"
+      hour: "0"
+      day: "*"
+      month: "*"
+      weekday: "*"
+      job: "/usr/bin/uptime > /var/log/uptime_check.log 2>&1"
+      state: present
